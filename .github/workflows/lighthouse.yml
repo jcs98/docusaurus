@@ -1,0 +1,21 @@
+name: Lighthouse
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lighthouseci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: yarn install && npm install -g @lhci/cli@0.6.x
+      - run: yarn build
+      - run: lhci autorun
